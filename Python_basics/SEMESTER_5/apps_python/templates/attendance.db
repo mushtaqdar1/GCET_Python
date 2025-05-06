@@ -1,0 +1,31 @@
+import sqlite3
+
+# Connect to SQLite database (creates 'attendance.db' if it doesn't exist)
+conn = sqlite3.connect("attendance.db")
+cursor = conn.cursor()
+
+# Create Attendance Table
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS attendance (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        date TEXT,
+        name TEXT,
+        roll_no TEXT,
+        status TEXT
+    )
+""")
+
+# Commit changes and close connection
+conn.commit()
+conn.close()
+
+print("SQLite table created successfully!")
+
+conn = sqlite3.connect("attendance.db")
+cursor = conn.cursor()
+
+cursor.execute("INSERT INTO attendance (date, name, roll_no, status) VALUES (?, ?, ?, ?)", 
+               ("2025-05-03", "Mushtaq", "101", "Present"))
+
+conn.commit()
+conn.close()
